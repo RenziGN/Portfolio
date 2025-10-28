@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input{
+    font-size: 30px;
+}
+
+.tablero{
+    background-color: red;
+    width: 50vw;
+    height: 80vh;
+}

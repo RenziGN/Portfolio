@@ -5,48 +5,31 @@
 const palabras = ["Bytes","Disco","Botón","Cable","Macro","Clase","Clave","Tabla","Datos","Codec"];
 
 let palabraJuego = "";
-let input1 = " ";
-let intentos = 0;
-let condicionvictoria = false;
-let cantAciertos=  0;
+let condicionVictoria = false;
 
-function IniciarJuego(){ //Script de inicio de juego
+
+function iniciarJuego(){ // 
+    let intentos = 0;
     let palabraJugador = ""
-    palabraJuego = ElegirPalabraAleatoria() // Esta funcion selecciona y asigna una palabra aleatoria del array
+    palabraJuego = elegirPalabraAleatoria() // Esta funcion selecciona y asigna una palabra aleatoria del array
     palabraJuego.toUpperCase(); // CONVERTIMOS EL STRING A MAYUSCULAS
     
-    while(intentos < 6 && condicionvictoria !== true ){
-        palabraJugador = "";
-        for(i = 0 ; i < 5 ; i++){
+    while(intentos < 6 && condicionVictoria !== true ){
+        palabraJugador = ""; //* REINICIAMOS LA PALABRA DEL JUGADOR
+        for(i = 0 ; i < 5 ; i++){ //* PARA LUEGO REESCRIBIRLA
             letra = prompt("Ingrese una letra").toUpperCase()
             palabraJugador += letra
         }
         palabraJugador.toUpperCase();
         palabraJuego = "BYTES"
         console.log(palabraJugador)
-        CompararPalabra(palabraJugador,palabraJuego); 
+        compararPalabra(palabraJugador,palabraJuego); 
         intentos++;
     }
 }
 
-/*
-function Checkletra(palabra,letraingre,){ //Esta funcion chequea 
-        vuelta = vuelta + 1;
-        letra = palabra[vuelta];
-        if (letra === letraingre)
-        {
-            console.log("Letra ok")
-        }
-        else
-        {
-            console.log("Letra mal")
-        }
-    
-}
-*/
-
-function CompararPalabra(palabraJ,palabraM){ //
-    cantAciertos = 0
+function compararPalabra(palabraJ,palabraM){ 
+    let cantAciertos = 0;
     for(i = 0 ; i < 5 ; i++){ // *RECORRE Y COMPARA LA PALABRA DEL JUEGO CONTRA LA DEL JUGADOR
         letraJ = palabraJ[i]
         letraM = palabraM[i]
@@ -57,8 +40,6 @@ function CompararPalabra(palabraJ,palabraM){ //
             console.log(`La letra ${letraJ} es correcta en esta posición`)
             cantAciertos = cantAciertos + 1;
             console.log(cantAciertos);
-           
-            
         }else if(palabraJuego.includes(letraJ)){
             //? LA PALABRA DEL JUGADOR ESTÁ CONTENIDA DENTRO DE LA PALABRA DEL JUEGO
             console.log(`La letra ${letraJ} está contenida en la palabra del juego, pero en otra posición`)
@@ -68,15 +49,16 @@ function CompararPalabra(palabraJ,palabraM){ //
         }
 
         if(cantAciertos === 5){
-            condicionvictoria = true
+            condicionVictoria = true
         }
-   
+
     }
 }
 
-function ElegirPalabraAleatoria(){
-    let randomPos = Math.floor(Math.random() * palabras.length) // esta funcion elige aleatoriamente una de las palabras del array Palabras
-    return palabras[randomPos]
+function elegirPalabraAleatoria(){
+    //* Esta funcion elige aleatoriamente una de las palabras del array Palabras
+    let randomPos = Math.floor(Math.random() * palabras.length); 
+    return palabras[randomPos];
 }
 
-IniciarJuego()
+iniciarJuego()
