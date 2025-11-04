@@ -23,15 +23,7 @@ function IniciarJuego(){ //Script de inicio de juego
         palabraJugador = "";
         for(i = 0 ; i < 5 ; i++){
             letra = prompt("Ingrese una letra").toUpperCase();
-            if (letra.match(allLetters))
-            {
-                saberTeclaInput(contadorUbicacion);
-                palabraJugador += letra;
-            }
-            else
-            {
-                alert("Caracter no valido");
-            }
+            
         }
         palabraJugador.toUpperCase();
         palabraJuego = "BYTES";
@@ -90,9 +82,16 @@ function CompararPalabra(palabraJ,palabraM){ //
 function saberTeclaInput(){
     window.addEventListener('keydown', function (e) {
     teclaPresionada = e.key.toUpperCase();
-     document.querySelector(`#p${contadorUbicacion}`).innerHTML = `${teclaPresionada}`;
-     verficadorEnterInput(teclaPresionada);
-     contadorUbicacion++;
+        if (teclaPresionada.match(allLetters))
+        {
+            document.querySelector(`#p${contadorUbicacion}`).innerHTML = `${teclaPresionada}`;
+            verficadorEnterInput(teclaPresionada);
+            contadorUbicacion++;
+        }
+        else
+        {
+            alert("Caracter no valido");
+        }     
     }, false);
     
 
