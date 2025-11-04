@@ -3,12 +3,16 @@
 */
 // <>
 const palabras = ["Bytes","Disco","Botón","Cable","Macro","Clase","Clave","Tabla","Datos","Codec"];
-
+const allLetters = /[a-zA-Z]/g;
 let palabraJuego = "";
 let input1 = " ";
 let intentos = 0;
 let condicionvictoria = false;
 let cantAciertos=  0;
+let contadorUbicacion = 1;
+let teclaPresionada = "";
+
+saberTeclaInput(contadorUbicacion);
 
 function IniciarJuego(){ //Script de inicio de juego
     let palabraJugador = ""
@@ -18,11 +22,19 @@ function IniciarJuego(){ //Script de inicio de juego
     while(intentos < 6 && condicionvictoria !== true ){
         palabraJugador = "";
         for(i = 0 ; i < 5 ; i++){
-            letra = prompt("Ingrese una letra").toUpperCase()
-            palabraJugador += letra
+            letra = prompt("Ingrese una letra").toUpperCase();
+            if (letra.match(allLetters))
+            {
+                saberTeclaInput(contadorUbicacion);
+                palabraJugador += letra;
+            }
+            else
+            {
+                alert("Caracter no valido");
+            }
         }
         palabraJugador.toUpperCase();
-        palabraJuego = "BYTES"
+        palabraJuego = "BYTES";
         console.log(palabraJugador)
         CompararPalabra(palabraJugador,palabraJuego); 
         intentos++;
@@ -47,6 +59,7 @@ function Checkletra(palabra,letraingre,){ //Esta funcion chequea
 
 function CompararPalabra(palabraJ,palabraM){ //
     cantAciertos = 0
+
     for(i = 0 ; i < 5 ; i++){ // *RECORRE Y COMPARA LA PALABRA DEL JUEGO CONTRA LA DEL JUGADOR
         letraJ = palabraJ[i]
         letraM = palabraM[i]
@@ -73,6 +86,25 @@ function CompararPalabra(palabraJ,palabraM){ //
    
     }
 }
+
+function saberTeclaInput(){
+    window.addEventListener('keydown', function (e) {
+    teclaPresionada = e.key.toUpperCase();
+     document.querySelector(`#p${contadorUbicacion}`).innerHTML = `${teclaPresionada}`;
+     verficadorEnterInput(teclaPresionada);
+     contadorUbicacion++;
+    }, false);
+    
+
+}
+
+function verficadorEnterInput(a){
+    if (a === "BACKSPACE")
+    {
+        contadorUbicacion -1;
+    }
+}
+
 
 function ElegirPalabraAleatoria(){
     let randomPos = Math.floor(Math.random() * palabras.length) // esta funcion elige aleatoriamente una de las palabras del array Palabras

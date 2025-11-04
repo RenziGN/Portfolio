@@ -1,0 +1,56 @@
+:root{
+    --bgColor: #EFECE3;
+    --darkBgColor: #dedbd3;
+    --accentColor: #4A70A9;
+    --lightAccentColor: #4A70A9;
+    --presentColor: #FCB53B;
+    --correctColor: #63A361;
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1{
+    text-align: center;
+    font-size: 90px;
+
+}
+
+body{
+    height: 100vh;
+    background-color: var(--bgColor);
+}
+
+.tablero{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.letra{
+    border: 5px solid #4A70A9;
+    padding: 10px 40px 17px 40px;
+    border-radius: 5px;
+    font-size: 80px;
+    font-weight: 400;
+    background-color: var(--darkBgColor);
+}
+
+.fila-wordle{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.presente{
+    background-color: var(--presentColor);
+}
+
+.correcta{
+    background-color: var(--correctColor);
+}
