@@ -82,7 +82,7 @@ function CompararPalabra(palabraJ,palabraM){ //
 function saberTeclaInput(){
     window.addEventListener('keydown', function (e) {
     teclaPresionada = e.key.toUpperCase();
-        if (teclaPresionada.match(allLetters))
+        if (teclaPresionada.match(allLetters) && teclaPresionada.length==1)
         {
             document.querySelector(`#p${contadorUbicacion}`).innerHTML = `${teclaPresionada}`;
             verficadorEnterInput(teclaPresionada);
