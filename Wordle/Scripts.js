@@ -95,6 +95,10 @@ function saberTeclaInput(){
             document.querySelector(`#p${contadorUbicacion}`).innerHTML = `${teclaPresionada}`; //escribe el input segun donde este el contador de ubicacion
             verificadorInput(teclaPresionada); // verifica la tecla
             contadorUbicacion++; //Aumenta en 1 el contador de ubicacion
+            if (verificarfinaljuego(contadorUbicacion) === false)
+            {
+                alert("Fin del juego");
+            }
             }
         }
         else
@@ -105,6 +109,20 @@ function saberTeclaInput(){
     
 
 }
+
+
+function verificarfinaljuego(estado) //esto verifica el estado del juego final
+{ 
+    if (estado === 26)
+    {
+        return false
+    }
+    else
+    {
+        return true
+    }
+}
+
 
 function verificadorInput(a){ //Verifica si el input es backspace
     if (a === "BACKSPACE")
