@@ -82,25 +82,38 @@ function CompararPalabra(palabraJ,palabraM){ //
 function saberTeclaInput(){
     window.addEventListener('keydown', function (e) {
     teclaPresionada = e.key.toUpperCase();
-        if (teclaPresionada.match(allLetters) && teclaPresionada.length==1)
+        if (teclaPresionada.match(allLetters) && teclaPresionada.length==1 || teclaPresionada === "BACKSPACE" ) // toma el backspace ademas del rango determinado
         {
-            document.querySelector(`#p${contadorUbicacion}`).innerHTML = `${teclaPresionada}`;
-            verficadorEnterInput(teclaPresionada);
-            contadorUbicacion++;
+            if (teclaPresionada === "BACKSPACE") //si backspace es verdadero
+            {
+            verificadorInput(teclaPresionada); // verifica si es correcta
+            document.querySelector(`#p${contadorUbicacion - 1 }`).innerHTML = " "; //si es backspace borra el ultimo input
+            contadorUbicacion--; //baja el contador 1 para poder sobreescribir la letra
+            }
+            else
+            {
+            document.querySelector(`#p${contadorUbicacion}`).innerHTML = `${teclaPresionada}`; //escribe el input segun donde este el contador de ubicacion
+            verificadorInput(teclaPresionada); // verifica la tecla
+            contadorUbicacion++; //Aumenta en 1 el contador de ubicacion
+            }
         }
         else
         {
-            alert("Caracter no valido");
+            alert("Caracter no valido"); //en caso del caracter no estar dentro del rango, envia una alerta
         }     
     }, false);
     
 
 }
 
-function verficadorEnterInput(a){
+function verificadorInput(a){ //Verifica si el input es backspace
     if (a === "BACKSPACE")
     {
-        contadorUbicacion -1;
+        return true
+    }
+    else
+    {
+        return false
     }
 }
 
