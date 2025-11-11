@@ -5,29 +5,34 @@
 //! URGENTE
 //? 
 // <>
-const palabras = ["Bytes","Disco","Botón","Cable","Macro","Clase","Clave","Tabla","Datos","Codec"];
+const palabras = ["Bytes","Disco","Boton","Cable","Macro","Clase","Clave","Tabla","Datos","Codec"];
 const allLetters = /[a-zA-Z]/g;
 
 let input1 = " ";
 let intentos = 0;
 let condicionvictoria = false;
 let cantAciertos=  0;
-let contadorUbicacion = 1;
 let teclaPresionada = "";
 let limiteInf = 1;
 let limiteSup = 5;
+let controlEtapa = 0;
+let contadorUbicacion = 1;
+let palabraJuego = "";
+let palabraJugador = ""
 
-
-saberTeclaInput(contadorUbicacion);
 IniciarJuego();
 
+
 function IniciarJuego(){ //Script de inicio de juego
-    let palabraJugador = ""
-    let palabraJuego = "";
+    
+    
+    
     console.log(contadorUbicacion + " - " + limiteInf )
     
     palabraJuego = ElegirPalabraAleatoria() // Esta funcion selecciona y asigna una palabra aleatoria del array
-    palabraJuego.toUpperCase(); // CONVERTIMOS EL STRING A MAYUSCULAS
+    palabraJuego = palabraJuego.toUpperCase(); // CONVERTIMOS EL STRING A MAYUSCULAS
+    saberTeclaInput();
+
     /*
     while(intentos < 6 && condicionvictoria !== true ){
         palabraJugador = "";
@@ -60,26 +65,48 @@ function Checkletra(palabra,letraingre,){ //Esta funcion chequea
 }
 */  
 
-function CompararPalabra(palabraJ,palabraM){ //* Esta funcion esta correcta
+function CompararPalabra(palabraJugador){ //* Esta funcion esta correcta
     cantAciertos = 0
-
     for(i = 0 ; i < 5 ; i++){ // *RECORRE Y COMPARA LA PALABRA DEL JUEGO CONTRA LA DEL JUGADOR
-        letraJ = palabraJ[i]
-        letraM = palabraM[i]
-        
+        letraJ = palabraJugador[i] //* LETRA JUGADOR
+        letraM = palabraJuego[i]   //* LETRA JUEGO
+        j = 0
+        switch(controlEtapa)
+        {
+            case 1:
+                j = i + 1;
+                break;
+            case 2:
+                j = i + 6;
+                break;
+            case 3:
+                j = i + 11;
+                break;
+            case 4:
+                j = i + 16;
+                break;
+            case 5:
+                j = i + 21;
+                break;
+        }
+
 
         if(letraJ === letraM){
             //* EL JUGADOR ACERTÓ LA LETRA
             console.log(`La letra ${letraJ} es correcta en esta posición`)
+            // PINTAR DE VERDE
             cantAciertos = cantAciertos + 1;
             console.log(cantAciertos);
+
+            document.querySelector(`#p${j}`).classList.add("correcta");
             
         }else if(palabraJuego.includes(letraJ)){
             //? LA PALABRA DEL JUGADOR ESTÁ CONTENIDA DENTRO DE LA PALABRA DEL JUEGO
             console.log(`La letra ${letraJ} está contenida en la palabra del juego, pero en otra posición`)
+            // PINTAR DE AMARILLO
         }else{
             console.log("error, palabra o letra no contenida");
-            //! LA LETRA DEL JUGADOR NO ESTÁ CONTENIDA EN LA PALABRA DEL JUEGO   
+            //! LA LETRA DEL JUGADOR NO ESTÁ CONTENIDA EN LA PALABRA DEL JUEGO    !!!!PINTAR DE ROJO
         }
 
         if(cantAciertos === 5){
@@ -97,10 +124,10 @@ function saberTeclaInput(){ //* Esta funcion esta correcta
             
             Agregarletra();
             
-            if (verificarfinaljuego())
-            {
-                alert("Fin del juego");
-            }
+            SubirEtapa();
+
+            
+            console.log(limiteInf);
         }
         else if(teclaPresionada === "BACKSPACE"){
             BorrarLetra()
@@ -144,7 +171,9 @@ function Agregarletra(){ //* Esta funcion esta correcta
     {
         document.querySelector(`#p${contadorUbicacion}`).innerHTML = `${teclaPresionada}`; //escribe el input segun donde este el contador de ubicacion
         //TODO hacer la verificacion del limite 
-        contadorUbicacion++; //Aumenta en 1 el contador de ubicacion
+        contadorUbicacion++; //Aumenta en 1 el contdor de ubicacion
+
+
 
     }
 }
@@ -165,4 +194,40 @@ function BorrarLetra() //* Esta funcion esta correcta
         console.log(limiteInf);
         alert("No se pueden retroceder mas casillas");
     }
+}
+
+
+function SubirEtapa(){
+    
+    if ((contadorUbicacion-1) % 5 === 0)
+    {
+        ControlarEtapa();
+        limiteInf = contadorUbicacion;
+        limiteSup = limiteInf + 4;
+        controlEtapa++;
+        console.log("etapa = " + controlEtapa) ;
+        
+    }
+}
+
+function ControlarEtapa(){
+    palabraJugador = TomarPalabraJugador();
+    if (palabraJugador === palabraJuego){
+        alert("Fin del juego");
+    }
+    console.log(palabraJuego);
+    CompararPalabra(palabraJugador);
+    
+}
+
+function TomarPalabraJugador(){
+    let palabra = ""
+    let letra = ""
+    console.log(limiteInf + " - " + limiteSup)
+    for(i = limiteInf; i <= limiteSup ; i++){
+        letra = document.querySelector(`#p${i}`).innerHTML
+        palabra = palabra + letra;
+        console.log("Esta es la palabra "+palabra);
+    }
+    return palabra
 }
